@@ -35,7 +35,7 @@
                     }
                 }, new String[]{Manifest.permission.CAMERA});
 ## 多个权限使用                
-   PermissionRequest.getInstance().build(MainActivity.this).requestPermission(new PermissionRequest.PermissionListener() {
+   		PermissionRequest.getInstance().build(MainActivity.this).requestPermission(new PermissionRequest.PermissionListener() {
                     @Override
                     public void permissionGranted() {
                         Toast.makeText(MainActivity.this, "权限已全部申请通过", Toast.LENGTH_SHORT).show();
