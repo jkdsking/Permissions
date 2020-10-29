@@ -15,7 +15,7 @@
 	}
 	
 	dependencies {
-	        implementation 'com.github.jkdsking:Permissions:1.0.1'
+	        implementation 'com.github.jkdsking:Permissions:1.0.2'
 	}
 
  ## 单个权限使用
