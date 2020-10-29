@@ -1,6 +1,7 @@
 package com.jkds.permission;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+
+
+import android.support.v4.app.Fragment;
 
 /**
  * @author 王金珂
@@ -20,7 +21,7 @@ public class PermissionFragment extends Fragment {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,  String[] permissions,  int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode != PERMISSIONS_REQUEST_CODE) {
             return;

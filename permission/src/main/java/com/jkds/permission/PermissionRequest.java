@@ -1,12 +1,10 @@
 package com.jkds.permission;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
+import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
-
 /**
  * @author 王金珂
  * @date 2020/7/4
@@ -29,13 +27,13 @@ public class PermissionRequest {
 
     }
 
-    public PermissionRequest build(FragmentActivity activity) {
+    public PermissionRequest build(AppCompatActivity activity) {
         fragment = getFragmentInstance(activity.getSupportFragmentManager());
         return permissionRequest;
     }
 
     public PermissionRequest build(Fragment fragment) {
-        this.fragment = getFragmentInstance(fragment.getChildFragmentManager());
+        this.fragment = getFragmentInstance(fragment.getFragmentManager());
         return permissionRequest;
     }
 
@@ -64,7 +62,7 @@ public class PermissionRequest {
      * @param listener          请求回调
      * @param permissions       请求的权限数组
      */
-    public void requestPermission(@NonNull PermissionListener listener, String[] permissions) {
+    public void requestPermission( PermissionListener listener, String[] permissions) {
         fragment.requestPermissions(permissions,listener);
     }
 

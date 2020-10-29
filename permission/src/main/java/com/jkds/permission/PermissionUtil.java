@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.content.PermissionChecker;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.PermissionChecker;
 
+import java.security.PermissionCollection;
 import java.util.ArrayList;
 
 /**
@@ -41,7 +40,7 @@ public class PermissionUtil {
      * @param permissions 所有请求的权限
      * @return 是否点击了不再询问按钮
      */
-    public static boolean isNeverAsk(Context context, @NonNull String... permissions) {
+    public static boolean isNeverAsk(Context context,  String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (String permissionName : permissions) {
                 if (((Activity) context).shouldShowRequestPermissionRationale(permissionName)) {
@@ -60,7 +59,7 @@ public class PermissionUtil {
      * @param permissions 所有请求的权限
      * @return 不再询问的permissions
      */
-    public static ArrayList<String> getNeverAskPermissions(Context context, @NonNull String... permissions) {
+    public static ArrayList<String> getNeverAskPermissions(Context context, String... permissions) {
         ArrayList<String> neverAskPermissions = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (String permissionName : permissions) {
@@ -81,10 +80,11 @@ public class PermissionUtil {
      * @param permissions 所有请求的权限
      * @return 被拒绝的权限
      */
-    public static ArrayList<String> getDeniedPermissions(Context context, @NonNull String... permissions) {
+    public static ArrayList<String> getDeniedPermissions(Context context,  String... permissions) {
         ArrayList<String> deniedPermissions = new ArrayList<>();
         for (String permissionName : permissions) {
             int result = PermissionChecker.checkSelfPermission(context, permissionName);
+
             if (result != PermissionChecker.PERMISSION_GRANTED) {
                 deniedPermissions.add(permissionName);
             }
