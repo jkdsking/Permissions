@@ -1,7 +1,10 @@
 package com.jkds.permission;
 
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * @author 王金珂
@@ -11,15 +14,17 @@ public class PermissionFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_CODE = 0;
     private PermissionRequest.PermissionListener listener;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestPermissions(String[] permissions, PermissionRequest.PermissionListener listener) {
         this.listener = listener;
-        if(!PermissionUtil.hasPermission(getContext(),permissions)) {
+        if(!PermissionUtil.hasPermission(this.getContext(),permissions)) {
             requestPermissions(permissions, PERMISSIONS_REQUEST_CODE);
         }else {
             listener.permissionGranted();
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode,  String[] permissions,  int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
