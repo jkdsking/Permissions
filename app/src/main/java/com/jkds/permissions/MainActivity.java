@@ -1,11 +1,12 @@
 package com.jkds.permissions;
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.jkds.permission.OnPermission;
@@ -37,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
                             public void noPermission(List<String> denied, boolean never) {
                                 if (never) {
                                     toast("权限已拒绝，并不再提示");
-                                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                                 } else {
                                     toast("权限已拒绝");
                                 }
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                 PermissionsRequest.with(MainActivity.this)
-
-
                         .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO)
                         // 申请多个权限
                         .request(new OnPermission() {
@@ -74,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
                             public void noPermission(List<String> denied, boolean never) {
                                 if (never) {
                                     toast("权限已被拒绝并不再提示");
-                                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                                 } else {
                                     toast("权限已拒绝");
                                 }
@@ -86,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionsRequest.REQUEST_CODE) {
             if (PermissionsRequest.hasPermission(this,Manifest.permission.CAMERA)) {
