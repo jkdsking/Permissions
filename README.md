@@ -13,10 +13,18 @@
 			maven { url 'https://jitpack.io' }
 		}
 	}
+
+## support 版本
+	
+	dependencies {
+	        implementation 'com.github.jkdsking:Permissions:1.0.2'
+	}
+## androidx 版本
 	
 	dependencies {
 	        implementation 'com.github.jkdsking:Permissions:1.0.1'
-	}
+	}	
+	
 
  ## 单个权限使用
                  PermissionRequest.getInstance().build(MainActivity.this).requestPermission(new PermissionRequest.PermissionListener() {
