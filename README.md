@@ -13,51 +13,55 @@
 			maven { url 'https://jitpack.io' }
 		}
 	}
-
-## support 版本
 	
 	dependencies {
-	        implementation 'com.github.jkdsking:Permissions:1.0.2'
+	        implementation 'com.github.jkdsking:Permissions:1.1.1'
 	}
-## androidx 版本
-	
-	dependencies {
-	        implementation 'com.github.jkdsking:Permissions:1.0.1'
-	}	
 	
 
  ## 单个权限使用
-                 PermissionRequest.getInstance().build(MainActivity.this).requestPermission(new PermissionRequest.PermissionListener() {
-                    @Override
-                    public void permissionGranted() {
-                        Toast.makeText(MainActivity.this, "权限已申请通过", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void permissionDenied(ArrayList<String> permissions) {
-                        Toast.makeText(MainActivity.this, "获取拒绝", Toast.LENGTH_SHORT).show();
-                    }
+                               PermissionsRequest.with(MainActivity.this)
+                        .permission(Manifest.permission.CAMERA)
+                        .request(new OnPermission() {
 
-                    @Override
-                    public void permissionNeverAsk(ArrayList<String> permissions) {
-                        Toast.makeText(MainActivity.this, "拒绝并不再提示", Toast.LENGTH_SHORT).show();
-                    }
-                }, new String[]{Manifest.permission.CAMERA});
+                            @Override
+                            public void hasPermission(List<String> granted, boolean all) {
+                                if (all) {
+                                    toast("权限已申请通过");
+                                }
+                            }
+
+                            @Override
+                            public void noPermission(List<String> denied, boolean never) {
+                                if (never) {
+                                    toast("权限已拒绝，并不再提示");
+                                } else {
+                                    toast("权限已拒绝");
+                                }
+                            }
+                        });
 ## 多个权限使用                
-   		PermissionRequest.getInstance().build(MainActivity.this).requestPermission(new PermissionRequest.PermissionListener() {
-                    @Override
-                    public void permissionGranted() {
-                        Toast.makeText(MainActivity.this, "权限已全部申请通过", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void permissionDenied(ArrayList<String> permissions) {
-                        Toast.makeText(MainActivity.this, "获取拒绝", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void permissionNeverAsk(ArrayList<String> permissions) {
-                        Toast.makeText(MainActivity.this, "拒绝并不再提示", Toast.LENGTH_SHORT).show();
-                    }
-                }, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO});
+   		                PermissionsRequest.with(MainActivity.this)
+                        .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO)
+                        // 申请多个权限
+                        .request(new OnPermission() {
+                            @Override
+                            public void hasPermission(List<String> granted, boolean all) {
+                                if (all) {
+                                    toast("权限已全部申请通过");
+                                } else {
+                                    toast("获取部分权限成功，但部分权限未正常授予"+granted.size());
+                                }
+                            }
+                            @Override
+                            public void noPermission(List<String> denied, boolean never) {
+                                if (never) {
+                                    toast("权限已被拒绝并不再提示");
+                                } else {
+                                    toast("权限已拒绝");
+                                }
+                            }
+                        });
  
  
  ## 开源协议
