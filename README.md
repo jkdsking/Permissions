@@ -20,7 +20,7 @@
 	
 
  ## 单个权限使用
-                               PermissionsRequest.with(MainActivity.this)
+                         PermissionsRequest.with(MainActivity.this)
                         .permission(Manifest.permission.CAMERA)
                         .request(new OnPermission() {
 
@@ -41,7 +41,7 @@
                             }
                         });
 ## 多个权限使用                
-   		                PermissionsRequest.with(MainActivity.this)
+   		         PermissionsRequest.with(MainActivity.this)
                         .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO)
                         // 申请多个权限
                         .request(new OnPermission() {
