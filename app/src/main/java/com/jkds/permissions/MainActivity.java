@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.PermissionRequest;
 import android.widget.Toast;
 
 
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jkds.permission.OnPermission;
 import com.jkds.permission.Permission;
+import com.jkds.permission.PermissionUtil;
 import com.jkds.permission.PermissionsRequest;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                             public void noPermission(List<String> denied, boolean never) {
                                 if (never) {
                                     toast("权限已拒绝，并不再提示");
+                                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                                 } else {
                                     toast("权限已拒绝");
                                 }
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 PermissionsRequest.with(MainActivity.this)
-                        .permission(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION,Permission.ACCESS_BACKGROUND_LOCATION)
+                        .permission(Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION)
                         // 申请多个权限
                         .request(new OnPermission() {
                             @Override
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             public void noPermission(List<String> denied, boolean never) {
                                 if (never) {
                                     toast("权限已被拒绝并不再提示");
+                                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                                 } else {
                                     toast("权限已拒绝");
                                 }
@@ -91,8 +95,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PermissionsRequest.REQUEST_CODE) {
-            if (PermissionsRequest.hasPermission(this,Manifest.permission.CAMERA)) {
-                toast("用户已经在权限设置页授予了照相机权限");
+            if (PermissionsRequest.hasPermission(this,Permission.MANAGE_EXTERNAL_STORAGE)) {
+                toast("用户已经在权限设置页授予了存储权限");
+            }else if (PermissionsRequest.hasPermission(this,Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION)){
+                toast("用户已经在权限设置页授予了定位权限");
+
             }
         }
     }
