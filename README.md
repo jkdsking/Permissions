@@ -22,7 +22,7 @@
  ## 具体使用
 
 ```java
-XXPermissions.with(this)
+PermissionsRequest.with(this)
         // 申请安装包权限
         //.permission(Permission.REQUEST_INSTALL_PACKAGES)
         // 申请悬浮窗权限
@@ -114,7 +114,7 @@ android
 * 最后直接调用下面这句代码
 
 ```java
-XXPermissions.with(MainActivity.this)
+PermissionsRequest.with(MainActivity.this)
         // 不适配 Android 11 可以这样写
         //.permission(Permission.Group.STORAGE)
         // 适配 Android 11 需要这样写，这里无需再写 Permission.Group.STORAGE
