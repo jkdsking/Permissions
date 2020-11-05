@@ -11,7 +11,7 @@
         android:id="@+id/btn_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="单个权限"
+        android:text="android11存储权限获取"
         android:layout_centerInParent="true"
         />
 
@@ -19,7 +19,7 @@
         android:id="@+id/btn_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="多个权限"
+        android:text="android11定位权限获取"
 
         android:layout_below="@id/btn_one"
         android:layout_centerHorizontal="true"

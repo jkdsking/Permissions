@@ -20,7 +20,7 @@
 	
 
  ## 单个权限使用
-                               PermissionsRequest.with(MainActivity.this)
+                       PermissionsRequest.with(MainActivity.this)
                         .permission(Manifest.permission.CAMERA)
                         .request(new OnPermission() {
 
