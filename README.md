@@ -19,49 +19,123 @@
 	}
 	
 
- ## 单个权限使用
-                       PermissionsRequest.with(MainActivity.this)
-                        .permission(Manifest.permission.CAMERA)
-                        .request(new OnPermission() {
+ ## 具体使用
 
-                            @Override
-                            public void hasPermission(List<String> granted, boolean all) {
-                                if (all) {
-                                    toast("权限已申请通过");
-                                }
-                            }
+```java
+XXPermissions.with(this)
+        // 申请安装包权限
+        //.permission(Permission.REQUEST_INSTALL_PACKAGES)
+        // 申请悬浮窗权限
+        //.permission(Permission.SYSTEM_ALERT_WINDOW)
+        // 申请通知栏权限
+        //.permission(Permission.NOTIFICATION_SERVICE)
+        // 申请系统设置权限
+        //.permission(Permission.WRITE_SETTINGS)
+        // 申请单个权限
+        .permission(Permission.RECORD_AUDIO)
+        // 申请多个权限
+        .permission(Permission.Group.CALENDAR)
+        .request(new OnPermission() {
 
-                            @Override
-                            public void noPermission(List<String> denied, boolean never) {
-                                if (never) {
-                                    toast("权限已拒绝，并不再提示");
-                                } else {
-                                    toast("权限已拒绝");
-                                }
-                            }
-                        });
-## 多个权限使用                
-   		                PermissionsRequest.with(MainActivity.this)
-                        .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO)
-                        // 申请多个权限
-                        .request(new OnPermission() {
-                            @Override
-                            public void hasPermission(List<String> granted, boolean all) {
-                                if (all) {
-                                    toast("权限已全部申请通过");
-                                } else {
-                                    toast("获取部分权限成功，但部分权限未正常授予"+granted.size());
-                                }
-                            }
-                            @Override
-                            public void noPermission(List<String> denied, boolean never) {
-                                if (never) {
-                                    toast("权限已被拒绝并不再提示");
-                                } else {
-                                    toast("权限已拒绝");
-                                }
-                            }
-                        });
+            @Override
+            public void hasPermission(List<String> granted, boolean all) {
+                if (all) {
+                    toast("获取限成功");
+                } else {
+                    toast("获取部分权限成功，但部分权限未正常授予");
+                }
+            }
+
+            @Override
+            public void noPermission(List<String> denied, boolean never) {
+                if (never) {
+                    toast("被永久拒绝授权，请手动授予权限");
+                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                    XXPermissions.startPermissionActivity(MainActivity.this, denied);
+                } else {
+                    toast("获取权限失败");
+                }
+            }
+        });
+```
+#### 从系统权限设置页返回判断
+
+```java
+public class XxxActivity extends AppCompatActivity {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == XXPermissions.REQUEST_CODE) {
+            if (XXPermissions.hasPermission(this, Permission.RECORD_AUDIO) &&
+                    XXPermissions.hasPermission(this, Permission.Group.CALENDAR)) {
+                toast("用户已经在权限设置页授予了权限");
+            }
+        }
+    }
+}
+```
+#### Android 11 存储适配
+
+* 如果你的项目需要适配 Android 11 存储权限，那么需要先将 targetSdkVersion 进行升级
+
+```groovy
+android
+    defaultConfig {
+        targetSdkVersion 30
+    }
+}
+```
+
+* 再添加 Android 11 存储权限注册到清单文件中
+
+```xml
+<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+```
+
+* 需要注意的是，旧版的存储权限也需要在清单文件中注册，因为在低于 Android 11 的环境下申请存储权限，框架会自动切换到旧版的申请方式
+
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+* 还需要在清单文件中加上这个属性，否则在 Android 10 的设备上将无法正常读写外部存储上的文件
+
+```xml
+<application
+    android:requestLegacyExternalStorage="true">
+```
+
+* 最后直接调用下面这句代码
+
+```java
+XXPermissions.with(MainActivity.this)
+        // 不适配 Android 11 可以这样写
+        //.permission(Permission.Group.STORAGE)
+        // 适配 Android 11 需要这样写，这里无需再写 Permission.Group.STORAGE
+        .permission(Permission.MANAGE_EXTERNAL_STORAGE)
+        .request(new OnPermission() {
+
+            @Override
+            public void hasPermission(List<String> granted, boolean all) {
+                if (all) {
+                    toast("获取存储权限成功");
+                }
+            }
+
+            @Override
+            public void noPermission(List<String> denied, boolean never) {
+                if (never) {
+                    toast("被永久拒绝授权，请手动授予存储权限");
+                    // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                    XXPermissions.startPermissionActivity(MainActivity.this, denied);
+                } else {
+                    toast("获取存储权限失败");
+                }
+            }
+        });
+```
  
  
  ## 开源协议
