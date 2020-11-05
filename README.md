@@ -65,11 +65,15 @@ public class XxxActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == XXPermissions.REQUEST_CODE) {
-            if (XXPermissions.hasPermission(this, Permission.RECORD_AUDIO) &&
-                    XXPermissions.hasPermission(this, Permission.Group.CALENDAR)) {
-                toast("用户已经在权限设置页授予了权限");
+        if (requestCode == PermissionsRequest.REQUEST_CODE) {
+            if (PermissionsRequest.hasPermission(this,Permission.MANAGE_EXTERNAL_STORAGE)) {
+                toast("用户已经在权限设置页授予了存储权限");
+            }else if (PermissionsRequest.hasPermission(this,Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION)){
+                toast("用户已经在权限设置页授予了定位权限");
+
             }
         }
     }
