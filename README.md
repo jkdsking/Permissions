@@ -1,4 +1,4 @@
-##  Android6.0以上 动态权限获取
+##  Android6.0以上 动态权限获取 以适配android11 存储权限
 ![image](https://github.com/jkdsking/Permissions/blob/master/png/1.jpg)
 ![image](https://github.com/jkdsking/Permissions/blob/master/png/2.jpg)
 ![image](https://github.com/jkdsking/Permissions/blob/master/png/3.jpg)
