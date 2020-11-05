@@ -20,7 +20,6 @@
 	
 
  ## 具体使用
-                       #### 一句代码搞定权限请求，从未如此简单
 
 ```java
 XXPermissions.with(this)
@@ -41,7 +40,7 @@ XXPermissions.with(this)
             @Override
             public void hasPermission(List<String> granted, boolean all) {
                 if (all) {
-                    toast("获取录音和日历权限成功");
+                    toast("获取限成功");
                 } else {
                     toast("获取部分权限成功，但部分权限未正常授予");
                 }
@@ -50,11 +49,11 @@ XXPermissions.with(this)
             @Override
             public void noPermission(List<String> denied, boolean never) {
                 if (never) {
-                    toast("被永久拒绝授权，请手动授予录音和日历权限");
+                    toast("被永久拒绝授权，请手动授予权限");
                     // 如果是被永久拒绝就跳转到应用权限系统设置页面
                     XXPermissions.startPermissionActivity(MainActivity.this, denied);
                 } else {
-                    toast("获取录音和日历权限失败");
+                    toast("获取权限失败");
                 }
             }
         });
@@ -70,7 +69,7 @@ public class XxxActivity extends AppCompatActivity {
         if (requestCode == XXPermissions.REQUEST_CODE) {
             if (XXPermissions.hasPermission(this, Permission.RECORD_AUDIO) &&
                     XXPermissions.hasPermission(this, Permission.Group.CALENDAR)) {
-                toast("用户已经在权限设置页授予了录音和日历权限");
+                toast("用户已经在权限设置页授予了权限");
             }
         }
     }
