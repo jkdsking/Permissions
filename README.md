@@ -51,7 +51,7 @@ XXPermissions.with(this)
                 if (never) {
                     toast("被永久拒绝授权，请手动授予权限");
                     // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                    XXPermissions.startPermissionActivity(MainActivity.this, denied);
+                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                 } else {
                     toast("获取权限失败");
                 }
@@ -133,7 +133,7 @@ XXPermissions.with(MainActivity.this)
                 if (never) {
                     toast("被永久拒绝授权，请手动授予存储权限");
                     // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                    XXPermissions.startPermissionActivity(MainActivity.this, denied);
+                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                 } else {
                     toast("获取存储权限失败");
                 }
