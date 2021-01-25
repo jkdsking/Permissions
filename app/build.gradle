@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.jkds.permissions"
@@ -17,6 +16,10 @@ android {
         release {
             minifyEnabled false
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -35,9 +38,9 @@ dependencies {
 //    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
 
-//    implementation project(':permission')
+    implementation project(':permission')
 
-    implementation 'com.github.jkdsking:Permissions:1.1.1'
+//    implementation 'com.github.jkdsking:Permissions:1.1.1'
 
 
 }
