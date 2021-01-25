@@ -1,4 +1,4 @@
-##  Android6.0以上 动态权限获取
+##  Android6.0以上 动态权限获取 以适配android11 存储权限
 ![image](https://github.com/jkdsking/Permissions/blob/master/png/1.jpg)
 ![image](https://github.com/jkdsking/Permissions/blob/master/png/2.jpg)
 ![image](https://github.com/jkdsking/Permissions/blob/master/png/3.jpg)
@@ -22,7 +22,7 @@
  ## 具体使用
 
 ```java
-XXPermissions.with(this)
+PermissionsRequest.with(this)
         // 申请安装包权限
         //.permission(Permission.REQUEST_INSTALL_PACKAGES)
         // 申请悬浮窗权限
@@ -51,7 +51,7 @@ XXPermissions.with(this)
                 if (never) {
                     toast("被永久拒绝授权，请手动授予权限");
                     // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                    XXPermissions.startPermissionActivity(MainActivity.this, denied);
+                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                 } else {
                     toast("获取权限失败");
                 }
@@ -65,11 +65,15 @@ public class XxxActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == XXPermissions.REQUEST_CODE) {
-            if (XXPermissions.hasPermission(this, Permission.RECORD_AUDIO) &&
-                    XXPermissions.hasPermission(this, Permission.Group.CALENDAR)) {
-                toast("用户已经在权限设置页授予了权限");
+        if (requestCode == PermissionsRequest.REQUEST_CODE) {
+            if (PermissionsRequest.hasPermission(this,Permission.MANAGE_EXTERNAL_STORAGE)) {
+                toast("用户已经在权限设置页授予了存储权限");
+            }else if (PermissionsRequest.hasPermission(this,Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION)){
+                toast("用户已经在权限设置页授予了定位权限");
+
             }
         }
     }
@@ -110,7 +114,7 @@ android
 * 最后直接调用下面这句代码
 
 ```java
-XXPermissions.with(MainActivity.this)
+PermissionsRequest.with(MainActivity.this)
         // 不适配 Android 11 可以这样写
         //.permission(Permission.Group.STORAGE)
         // 适配 Android 11 需要这样写，这里无需再写 Permission.Group.STORAGE
@@ -129,7 +133,7 @@ XXPermissions.with(MainActivity.this)
                 if (never) {
                     toast("被永久拒绝授权，请手动授予存储权限");
                     // 如果是被永久拒绝就跳转到应用权限系统设置页面
-                    XXPermissions.startPermissionActivity(MainActivity.this, denied);
+                    PermissionsRequest.startPermissionActivity(MainActivity.this, denied);
                 } else {
                     toast("获取存储权限失败");
                 }
