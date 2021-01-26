@@ -22,7 +22,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -38,9 +37,11 @@ dependencies {
 //    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
 
-    implementation project(':permission')
+//    implementation project(':permission')
 
+    implementation 'com.jkds:permission:1.0.1'
 //    implementation 'com.github.jkdsking:Permissions:1.1.1'
 
 
 }
+
