@@ -19,7 +19,7 @@
 	}
    
     或者
-    implementation 'com.jkds:Ios_Popup:1.0.1'(不用添加上面的jitpack库)
+    implementation 'com.jkds:permission:1.0.1'(不用添加上面的jitpack库)
 	
 
  ## 具体使用
