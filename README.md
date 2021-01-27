@@ -17,6 +17,8 @@
 	dependencies {
 	        implementation 'com.github.jkdsking:Permissions:1.1.1'
 	}
+        或者
+        implementation 'com.jkds:Ios_Popup:1.0.1'
 	
 
  ## 具体使用
